@@ -29,6 +29,31 @@ async function run() {
     const lunchmealColl = db.collection('lunchItems');
     const dinnerhmealColl = db.collection('dinnerItems');
     const myorder=db.collection('order')
+    const reviweColl=db.collection('reviwes')
+
+    // reviwes
+
+    app.get('/reviews', async (req, res) => {
+      const result = await reviweColl.find().toArray();
+      res.send(result);
+
+
+    });
+// sort 
+    app.get('/topratings/reviews', async (req, res) => {
+  try {
+    // Filter reviews with rating between 4.5 and 5
+    const result = await reviweColl
+      .find({ rating: { $gte: 4.5, $lte: 5 } }) // filter ratings >=4.5 and <=5
+      .sort({ rating: -1 }) // sort descending
+      .toArray();
+
+    res.send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Failed to fetch reviews" });
+  }
+});
 
 
 
@@ -297,6 +322,3 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-// SR0eT45CB9dCuXgZ
-
-// mealsMateUser
