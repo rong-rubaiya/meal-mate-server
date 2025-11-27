@@ -39,6 +39,48 @@ async function run() {
 
 
     });
+
+    // save reviews
+
+    app.post("/reviews", async (req, res) => {
+  try {
+    const review = req.body; // {email, image, review, rating}
+    const result = await reviweColl.insertOne(review);
+    res.send(review); // return the review so frontend can update instantly
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to add review" });
+  }
+});
+
+// delete
+
+app.delete("/reviews/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    await reviweColl.deleteOne({ _id: new ObjectId(id) });
+    res.send({ success: true });
+  } catch (err) {
+    res.status(500).send({ message: "Failed to delete review" });
+  }
+});
+
+
+// Update review
+app.patch("/reviews/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { review, rating } = req.body;
+    await reviweColl.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { review, rating } }
+    );
+    res.send({ success: true });
+  } catch (err) {
+    res.status(500).send({ message: "Failed to update review" });
+  }
+});
+
 // sort 
     app.get('/topratings/reviews', async (req, res) => {
   try {
@@ -54,6 +96,8 @@ async function run() {
     res.status(500).send({ message: "Failed to fetch reviews" });
   }
 });
+
+// breakfast
 
 
 
