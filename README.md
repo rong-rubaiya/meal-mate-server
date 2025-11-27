@@ -24,7 +24,7 @@ This backend works seamlessly with the **Meal-Mate frontend** for a smooth meal 
 - **Runtime:** Node.js  
 - **Framework:** Express.js  
 - **Database:** MongoDB (Mongoose)  
-- **Authentication:** Firebase & JWT  
+- **Authentication:** NextAuth, Firebase & JWT  
 - **Environment Variables:** dotenv  
 - **Deployment:** Vercel / Render / Any Node.js supported platform  
 
